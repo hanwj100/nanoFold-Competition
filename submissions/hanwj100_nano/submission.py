@@ -4,7 +4,7 @@ from typing import Any, Dict
 
 import torch
 
-from nanofold.model import NanoFoldBaseline, baseline_composite_loss
+from nanofold.model import NanoFoldBaseline, distogram_loss
 from nanofold.residue_constants import ATOM14_NUM_SLOTS, CA_ATOM14_SLOT
 
 
@@ -45,7 +45,7 @@ def run_batch(
     if not training:
         return {"pred_atom14": pred_atom14}
 
-    loss, _ = baseline_composite_loss(
+    loss = distogram_loss(
         pred_ca=pred_ca,
         true_ca=batch["ca_coords"],
         ca_mask=batch["ca_mask"],
